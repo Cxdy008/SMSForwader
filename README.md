@@ -1,2 +1,2 @@
 # SMSForwader
-Uma aplicação android que pode redirecionar SMS 
+Uma aplicação android que permite redirecionar SMS para outros dispositivos.

@@ -21,13 +21,13 @@ A arquitetura completa, o plano de desenvolvimento por fases e a justificação 
 
 ## Identificadores do projeto
 
-- `applicationId` / package raiz: `com.cxdy.smsforwader`
+- `applicationId` / package raiz: `com.cxdy.smsforwarder`
 - Manter o package Kotlin e o `applicationId` sincronizados — um rename de package via refactor do Android Studio não atualiza o `applicationId` automaticamente, é preciso editar `build.gradle.kts (Module :app)` à parte.
 
 ## Estrutura de pacotes
 
 ```
-com.cxdy.smsforwader/
+com.cxdy.smsforwarder/
 ├── receiver/   # BroadcastReceiver para SMS_RECEIVED
 ├── service/    # Foreground Service
 ├── data/       # Entidades Room, DAO, repositório

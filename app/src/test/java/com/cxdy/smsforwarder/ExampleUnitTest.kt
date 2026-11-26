@@ -1,4 +1,4 @@
-package com.cxdy.smsforwader
+package com.cxdy.smsforwarder
 
 import org.junit.Test
 

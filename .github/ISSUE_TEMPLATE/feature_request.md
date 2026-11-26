@@ -36,6 +36,6 @@ Add any other context, mockups, or references here.
 
 ## Checklist
 
-- [ ] I have searched existing issues and the development plan (`docs/arquitectura.md`, section 3) for duplicates or planned work
+- [ ] I have searched existing issues and the roadmap (`docs/roadmap.md`) for duplicates or planned work
 - [ ] This request does not require a backend or intermediate server (see `docs/arquitectura.md`, "Caminho de evolução")
 - [ ] This request does not require storing SMS content or credentials outside the device in plain text

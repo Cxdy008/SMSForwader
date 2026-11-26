@@ -104,7 +104,7 @@ As fases, os passos e o estado de cada um estão em [roadmap.md](roadmap.md).
 |---|---|
 | `androidx.core:core-ktx` | Extensões Kotlin para APIs do Android |
 | `androidx.compose.*` (BOM) | UI declarativa (Jetpack Compose) |
-| `androidx.room:room-runtime` + `room-ktx` + `room-compiler` (KSP) | Persistência local (fila/log de mensagens) |
+| `androidx.room3:room3-runtime` + `room3-compiler` (KSP) + plugin `androidx.room3` | Persistência local (fila/log de mensagens); esquemas exportados para `app/schemas/` |
 | `androidx.work:work-runtime-ktx` | Agendamento e retry de encaminhamento em segundo plano |
 | `com.squareup.retrofit2:retrofit` + `converter-kotlinx-serialization` | Cliente HTTP para comunicação com a API do canal (Telegram, etc.) |
 | `org.jetbrains.kotlinx:kotlinx-serialization-json` | Serialização JSON |
@@ -112,6 +112,7 @@ As fases, os passos e o estado de cada um estão em [roadmap.md](roadmap.md).
 | `androidx.datastore:datastore-preferences` | Guardar configurações e o token encriptado |
 | `kotlinx.coroutines` | Programação assíncrona (Workers, chamadas de rede) |
 | `androidx.navigation:navigation-compose` | Navegação entre ecrãs |
+| `kotlinx-coroutines-test`, `okhttp:mockwebserver`, `work-testing` (só testes) | Testes JVM do worker, do cliente da Bot API e de código com corrotinas |
 
 A encriptação do token usa o Android Keystore da plataforma (`java.security` / `javax.crypto`), sem biblioteca adicional.
 
@@ -146,3 +147,4 @@ Não é necessária nenhuma biblioteca de backend — toda a stack é Android/Ko
 | 2026-11-26 | Corpo da SMS apagado 1 minuto após o 200 OK do Telegram; metadados mantidos | O conteúdo não deve ficar no dispositivo depois de entregue; os metadados bastam para o histórico |
 | 2026-11-26 | Documentação dividida em arquitetura, pipeline, permissões, roadmap e desenvolvimento; cada facto num só documento | O documento único misturava decisões, plano e detalhe de implementação; duplicar factos leva a documentos que se contradizem |
 | 2026-11-26 | Docs em português; código, commits, PRs e templates do GitHub em inglês | Formaliza a prática já seguida no repositório |
+| 2026-11-26 | Room 3 (`androidx.room3`) em vez de Room 2 | Projeto sem código Room ainda; o Room 3 é a versão principal estável atual (só KSP, API baseada em corrotinas) e evita uma migração futura |

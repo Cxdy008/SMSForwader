@@ -20,7 +20,7 @@ Não duplicar factos entre documentos (apontar para o documento dono) e não esc
 
 - **Linguagem**: Kotlin
 - **UI**: Jetpack Compose
-- **Persistência local**: Room (fila/log de mensagens)
+- **Persistência local**: Room 3 (`androidx.room3`, KSP, API com corrotinas — não usar a API do Room 2) para a fila/log de mensagens; esquemas exportados em `app/schemas/`
 - **Background/retry**: WorkManager (`CoroutineWorker`, backoff exponencial)
 - **Rede**: Retrofit + OkHttp (chamada direta à API do canal, ex. `api.telegram.org`)
 - **Configurações**: DataStore (preferences); o token do bot é encriptado com uma chave AES-GCM do Android Keystore antes de ir para o DataStore (não usar `security-crypto`, descontinuado)

@@ -11,7 +11,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.smsforwader"
+        applicationId = "com.cxdy.smsforwader"
         minSdk = 29
         targetSdk = 36
         versionCode = 1

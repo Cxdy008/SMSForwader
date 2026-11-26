@@ -16,7 +16,8 @@ A arquitetura completa, o plano de desenvolvimento por fases e a justificação 
 - **Background/retry**: WorkManager (`CoroutineWorker`, backoff exponencial)
 - **Rede**: Retrofit + OkHttp (chamada direta à API do canal, ex. `api.telegram.org`)
 - **Configurações**: DataStore (preferences) + `androidx.security:security-crypto` para o token do bot
-- **Build**: Gradle Kotlin DSL (`build.gradle.kts`), version catalog em `libs.versions.toml`
+- **Build**: Gradle Kotlin DSL (`build.gradle.kts`), version catalog em `libs.versions.toml`; AGP 9 com Kotlin integrado (não aplicar o plugin `org.jetbrains.kotlin.android`)
+- **SDK**: `compileSdk` 37.2, `targetSdk` 36, `minSdk` 29 — subir o `targetSdk` é uma mudança de comportamento em runtime e deve ser feita e testada à parte
 
 ## Identificadores do projeto
 

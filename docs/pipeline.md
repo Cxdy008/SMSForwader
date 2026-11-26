@@ -31,7 +31,7 @@ Purga do corpo (≥ 1 min depois)    worker/PurgeBodyWorker.kt        (planeado)
 - **Receiver**: corre dentro de `goAsync()` (janela de ~10 s). Só converte o intent em `RawSms`, grava e enfileira. Nunca faz rede.
 - **`RawSms` e regras puras**: o receiver converte os PDUs numa estrutura simples, independente do Android (remetente, corpo, timestamp, subId). A lógica de juntar multipartes, formatar e dividir mensagens vive em classes Kotlin puras, testáveis na JVM sem emulador.
 - **Trabalho único por mensagem**: o nome do trabalho deriva do id do Room, com política `KEEP` — enfileirar duas vezes a mesma SMS não gera dois envios.
-- **Worker**: trabalho *expedited* com restrição de rede; em API < 31 corre como foreground e precisa de `getForegroundInfo()`. Retry com backoff exponencial.
+- **Worker**: trabalho *expedited* com restrição de rede e `OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST` (sem quota expedited, corre como trabalho normal em vez de falhar); em API < 31 corre como foreground e precisa de `getForegroundInfo()`. Retry com backoff exponencial.
 
 ## 2. Contrato de segurança
 

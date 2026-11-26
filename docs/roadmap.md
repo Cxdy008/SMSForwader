@@ -12,12 +12,12 @@ Legenda: ✅ feito · 🚧 em curso · ⬜ por fazer
 - Arquitetura e decisões em [arquitectura.md](arquitectura.md); pipeline, permissões e guia de desenvolvimento documentados
 - Templates do GitHub (PR, feature, documentação, bug)
 
-## Fase 1 — Fundação do projeto Android 🚧
+## Fase 1 — Fundação do projeto Android ✅
 
 1. ✅ Criar projeto Kotlin + Jetpack Compose
-2. ⬜ Adicionar ao version catalog as dependências das Fases 2–5 ([arquitectura.md](arquitectura.md) §4)
-3. ⬜ Criar a estrutura de pacotes (`receiver`, `data`, `network`, `security`, `worker`, `ui`)
-4. ⬜ Declarar no manifest as permissões de [permissoes.md](permissoes.md)
+2. ✅ Adicionar ao version catalog as dependências das Fases 2–5 ([arquitectura.md](arquitectura.md) §4)
+3. ✅ Criar a estrutura de pacotes (`receiver`, `data`, `network`, `security`, `worker`, `ui`); os pacotes vazios têm um `.gitkeep`, a remover quando receberem o primeiro ficheiro
+4. ✅ Declarar no manifest as permissões de [permissoes.md](permissoes.md)
 
 ## Fase 2 — Interceção de SMS ⬜
 

@@ -2,6 +2,25 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Permissions: see docs/permissoes.md. READ_SMS is deliberately not requested. -->
+
+    <!-- Runtime: receive the SMS_RECEIVED broadcast. -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <!-- Normal: call the Telegram Bot API. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Runtime (API 33+): WorkManager foreground notification on API < 31 and failure alerts. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Special access: ask to be exempted from battery optimizations (docs/arquitectura.md §5).
+         Intended for an app whose core function would break under Doze. -->
+    <uses-permission
+        android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+        tools:ignore="BatteryLife" />
+
+    <!-- RECEIVE_SMS implies telephony; not required so the app also installs on test devices without a SIM. -->
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
     <application
         android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"

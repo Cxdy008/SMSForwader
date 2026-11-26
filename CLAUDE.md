@@ -6,7 +6,15 @@ Este ficheiro orienta o Claude Code ao trabalhar neste repositório.
 
 **SMSForwarder** é uma aplicação Android nativa (Kotlin) que intercepta SMS recebidas no dispositivo e encaminha-as diretamente para um canal externo (Telegram Bot API, por defeito), sem backend intermediário. Uso pessoal, num único dispositivo, com destino fixo.
 
-A arquitetura completa, o plano de desenvolvimento por fases e a justificação das decisões de design (incluindo por que não há backend) estão documentados em **`/docs/arquitectura.md`** — consultar esse ficheiro antes de propor mudanças estruturais (nova camada, novo canal de saída, reintrodução de backend, etc.), e mantê-lo atualizado sempre que uma decisão de arquitetura mudar.
+A documentação vive em `docs/`, um facto por documento:
+
+- **`docs/arquitectura.md`** — princípios, arquitetura, bibliotecas e **registo de decisões** (§6). Consultar antes de propor mudanças estruturais (nova camada, novo canal de saída, reintrodução de backend, etc.) e acrescentar uma linha ao registo sempre que uma decisão mudar.
+- **`docs/pipeline.md`** — caminho de uma SMS, **contrato de segurança** (§2), estados e retenção do conteúdo. Qualquer código no receiver, worker, repositório ou cliente de rede tem de respeitar o contrato.
+- **`docs/permissoes.md`** — permissões e acessos especiais.
+- **`docs/roadmap.md`** — fases e estado de cada uma; atualizar o estado no mesmo PR que o altera.
+- **`docs/desenvolvimento.md`** — comandos, testes no emulador, testes manuais, release assinado e convenções de branch/commit/PR.
+
+Não duplicar factos entre documentos (apontar para o documento dono) e não escrever versões na documentação — a fonte são os ficheiros de build.
 
 ## Stack técnica
 
@@ -17,7 +25,7 @@ A arquitetura completa, o plano de desenvolvimento por fases e a justificação 
 - **Rede**: Retrofit + OkHttp (chamada direta à API do canal, ex. `api.telegram.org`)
 - **Configurações**: DataStore (preferences); o token do bot é encriptado com uma chave AES-GCM do Android Keystore antes de ir para o DataStore (não usar `security-crypto`, descontinuado)
 - **Build**: Gradle Kotlin DSL (`build.gradle.kts`), version catalog em `libs.versions.toml`; AGP 9 com Kotlin integrado (não aplicar o plugin `org.jetbrains.kotlin.android`)
-- **SDK**: `compileSdk` 37.2, `targetSdk` 36, `minSdk` 29 — subir o `targetSdk` é uma mudança de comportamento em runtime e deve ser feita e testada à parte
+- **SDK**: níveis em `app/build.gradle.kts` — subir o `targetSdk` é uma mudança de comportamento em runtime e deve ser feita e testada à parte do `compileSdk`
 
 ## Identificadores do projeto
 
@@ -52,7 +60,11 @@ adb install app/build/outputs/apk/release/app-release.apk
 - **Token do bot nunca em texto plano**: introduzido em runtime no ecrã de configuração e encriptado com Android Keystore + DataStore (`docs/arquitectura.md` §2.3). Nunca em código, `BuildConfig`, `local.properties` ou recursos; nunca commitado; nunca em logs (o token faz parte do URL da Bot API — o `HttpLoggingInterceptor` só em debug e com o token ocultado).
 - **Registo do `BroadcastReceiver`**: estático no manifest, protegido por `android:permission="android.permission.BROADCAST_SMS"` — não usar `registerReceiver` em runtime, que perde SMS quando o processo está morto. O receiver só grava no Room e enfileira trabalho (via `goAsync()`); nunca faz rede.
 - **Sem Foreground Service**: o envio e os retries são do WorkManager (trabalho único por mensagem). Não reintroduzir um serviço permanente sem atualizar `docs/arquitectura.md`.
-- **Permissões mínimas**: `RECEIVE_SMS`, não `READ_SMS` (ver `docs/arquitectura.md` §2.4).
+- **Permissões mínimas**: `RECEIVE_SMS`, não `READ_SMS` (ver `docs/permissoes.md`).
+- **Conteúdo das SMS**: nunca em logs; o corpo é apagado do Room 1 minuto após o 200 OK do Telegram (`docs/pipeline.md` §4).
+- **Lógica testável sem Android**: juntar multipartes, formatar e dividir mensagens vive em classes Kotlin puras (entrada `RawSms`), com testes JVM.
+- **Dependências**: cada biblioteca nova é justificada no PR; sem frameworks de DI (Hilt/Koin), usar injeção por construtor.
+- **Língua**: `docs/` e este ficheiro em português; código, commits, PRs e templates do GitHub em inglês.
 - **Distribuição**: sideload direto do APK assinado — não há submissão à Play Store (política restritiva para permissões de SMS).
 - **Gestão de bateria**: o app depende de isenção de otimização de bateria (`REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`); em dispositivos Xiaomi/Huawei/Samsung pode ser necessário ativar o arranque automático e outra configuração manual fora do app.
 

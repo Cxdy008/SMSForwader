@@ -99,6 +99,7 @@ O keystore e as passwords **nunca** entram no repositório (o `.gitignore` exclu
 
 ## Problemas frequentes
 
+- **`The project is using an incompatible version (AGP …) of the Android Gradle plugin`** (sync falha no Android Studio): cada versão do Android Studio só suporta o AGP até à sua própria linha. Antes de subir o AGP no `libs.versions.toml`, confirmar que o Android Studio instalado o suporta (tabela de compatibilidade em developer.android.com/build/releases/gradle-plugin); caso contrário, atualizar primeiro o Android Studio. Ao subir o AGP, remover também `android.suppressUnsupportedCompileSdk` do `gradle.properties` se já não for necessário.
 - **`Minimum supported Gradle version is …`**: o AGP foi atualizado sem o wrapper. Atualizar com `./gradlew wrapper --gradle-version <versão>` (pode ser preciso editar primeiro o `distributionUrl`).
 - **`Dependency … requires … compileSdk …`**: uma biblioteca exige um `compileSdk` mais recente. Subir só o `compileSdk`; o `targetSdk` muda o comportamento em runtime e é uma alteração separada.
 - **SMS do emulador não chega à app**: confirmar que `RECEIVE_SMS` está concedida e que a app não foi forçada a parar (abrir a app uma vez repõe).

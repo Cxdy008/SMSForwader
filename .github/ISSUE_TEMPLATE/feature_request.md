@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea for Notify Later
+about: Suggest an idea for SMSForwarder
 title: "[Feature] "
 labels: enhancement
 assignees: ""
@@ -10,7 +10,7 @@ assignees: ""
 
 Is your feature request related to a problem? Please describe.
 
-> A clear and concise description of what the problem is. (e.g., "I'm always distracted when...")
+> A clear and concise description of what the problem is. (e.g., "SMS that arrive while the phone is offline are...")
 
 ## Proposed Solution
 
@@ -22,13 +22,12 @@ A clear and concise description of any alternative solutions or features you hav
 
 ## Why It Matters
 
-Explain how this aligns with Notify Later's principles (Privacy First, Local First, User Control, Calm UI) and who benefits.
+Explain how this fits the project's goal (no message is ever lost, SMS content stays private, no backend) and who benefits.
 
 ## Scope
 
 - [ ] Android
 - [ ] Documentation
-- [ ] Future iOS (concept only — do not require implementation)
 - [ ] Other
 
 ## Additional Context
@@ -37,6 +36,6 @@ Add any other context, mockups, or references here.
 
 ## Checklist
 
-- [ ] I have searched existing issues and roadmap (`docs/product/roadmap.md`) for duplicates or planned work
-- [ ] This request does not require a backend, account system, analytics, or cloud dependency for MVP
-- [ ] I have considered whether this keeps the app calm and minimal
+- [ ] I have searched existing issues and the development plan (`docs/arquitectura.md`, section 3) for duplicates or planned work
+- [ ] This request does not require a backend or intermediate server (see `docs/arquitectura.md`, "Caminho de evolução")
+- [ ] This request does not require storing SMS content or credentials outside the device in plain text

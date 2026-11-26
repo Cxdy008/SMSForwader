@@ -12,7 +12,7 @@ What documentation is missing, outdated, or unclear?
 
 ## Location
 
-Where should this be documented? (e.g., `docs/architecture/overview.md`, `README.md`, `docs/android/development.md`)
+Where should this be documented? (e.g., `docs/arquitectura.md`, `README.md`, `CLAUDE.md`)
 
 ## Proposed Improvement
 

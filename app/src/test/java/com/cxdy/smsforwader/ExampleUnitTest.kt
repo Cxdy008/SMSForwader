@@ -1,4 +1,4 @@
-package com.example.smsforwader
+package com.cxdy.smsforwader
 
 import org.junit.Test
 

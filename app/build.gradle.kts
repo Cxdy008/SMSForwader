@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.smsforwader"
+    namespace = "com.cxdy.smsforwader"
     compileSdk {
         version = release(36)
     }

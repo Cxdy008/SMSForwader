@@ -16,7 +16,7 @@
 
 ## How to Test
 
-<!-- Steps for a reviewer to verify the change locally. -->
+<!-- Steps for a reviewer to verify the change locally (e.g. `adb emu sms send <number> <text>` on an emulator). -->
 
 1.
 2.
@@ -24,12 +24,13 @@
 
 ## Checklist
 
-- [ ] I have read `CONTRIBUTING.md` and `docs/contributing/pull-requests.md`
 - [ ] My branch is up to date with `main` and has a focused, single concern
-- [ ] `./gradlew testDebugUnitTest` passes locally (from `android/`)
-- [ ] No hard-coded user-facing strings — all strings are in `res/values/strings.xml` (+ `values-pt/`)
-- [ ] I have updated documentation if needed (`docs/` or `README.md`)
-- [ ] I have not introduced analytics, backend, auth, payments, or cloud dependencies
+- [ ] `./gradlew test` passes locally
+- [ ] No hard-coded user-facing strings — all strings are in `res/values/strings.xml`
+- [ ] No bot token, chat ID or other credential is committed (tokens are stored only via encrypted storage)
+- [ ] I have not introduced a backend or intermediate server (see `docs/arquitectura.md`, "Caminho de evolução")
+- [ ] If this changes data flow, the forwarding channel, or the retry/queue layer, `docs/arquitectura.md` is updated in this same PR
+- [ ] I have updated other documentation if needed (`README.md`, `CLAUDE.md`)
 - [ ] I have linked the related issue
 
 ## Related Issue

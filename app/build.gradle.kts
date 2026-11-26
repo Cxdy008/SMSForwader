@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.cxdy.smsforwader"
+    namespace = "com.cxdy.smsforwarder"
     compileSdk {
         version = release(37) {
             minorApiLevel = 2
@@ -12,7 +12,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.cxdy.smsforwader"
+        applicationId = "com.cxdy.smsforwarder"
         minSdk = 29
         targetSdk = 36
         versionCode = 1

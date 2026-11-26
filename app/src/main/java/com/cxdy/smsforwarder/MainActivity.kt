@@ -1,4 +1,4 @@
-package com.cxdy.smsforwader
+package com.cxdy.smsforwarder
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,14 +11,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.cxdy.smsforwader.ui.theme.SMSForwaderTheme
+import com.cxdy.smsforwarder.ui.theme.SMSForwarderTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            SMSForwaderTheme {
+            SMSForwarderTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
                         name = "Android",
@@ -41,7 +41,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    SMSForwaderTheme {
+    SMSForwarderTheme {
         Greeting("Android")
     }
 }

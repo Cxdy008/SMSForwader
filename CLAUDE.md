@@ -15,23 +15,23 @@ A arquitetura completa, o plano de desenvolvimento por fases e a justificação 
 - **Persistência local**: Room (fila/log de mensagens)
 - **Background/retry**: WorkManager (`CoroutineWorker`, backoff exponencial)
 - **Rede**: Retrofit + OkHttp (chamada direta à API do canal, ex. `api.telegram.org`)
-- **Configurações**: DataStore (preferences) + `androidx.security:security-crypto` para o token do bot
+- **Configurações**: DataStore (preferences); o token do bot é encriptado com uma chave AES-GCM do Android Keystore antes de ir para o DataStore (não usar `security-crypto`, descontinuado)
 - **Build**: Gradle Kotlin DSL (`build.gradle.kts`), version catalog em `libs.versions.toml`; AGP 9 com Kotlin integrado (não aplicar o plugin `org.jetbrains.kotlin.android`)
 - **SDK**: `compileSdk` 37.2, `targetSdk` 36, `minSdk` 29 — subir o `targetSdk` é uma mudança de comportamento em runtime e deve ser feita e testada à parte
 
 ## Identificadores do projeto
 
-- `applicationId` / package raiz: `com.cxdy.smsforwader`
+- `applicationId` / package raiz: `com.cxdy.smsforwarder`
 - Manter o package Kotlin e o `applicationId` sincronizados — um rename de package via refactor do Android Studio não atualiza o `applicationId` automaticamente, é preciso editar `build.gradle.kts (Module :app)` à parte.
 
 ## Estrutura de pacotes
 
 ```
-com.cxdy.smsforwader/
-├── receiver/   # BroadcastReceiver para SMS_RECEIVED
-├── service/    # Foreground Service
-├── data/       # Entidades Room, DAO, repositório
+com.cxdy.smsforwarder/
+├── receiver/   # BroadcastReceiver estático para SMS_RECEIVED
+├── data/       # Entidades Room, DAO, repositório, DataStore
 ├── network/    # Retrofit, clientes de API do canal (Telegram, etc.)
+├── security/   # Encriptação do token com Android Keystore
 ├── worker/     # CoroutineWorker / WorkManager
 └── ui/         # Ecrãs Compose
 ```
@@ -49,10 +49,12 @@ adb install app/build/outputs/apk/release/app-release.apk
 ## Convenções e decisões a respeitar
 
 - **Sem backend**: o app fala diretamente com a API do canal de saída. Não introduzir um servidor intermediário sem atualizar `/docs/arquitectura.md` primeiro e justificar a mudança (ex: necessidade real de múltiplos canais, múltiplos dispositivos, ou roteamento condicional — ver secção "Caminho de evolução" nesse documento).
-- **Token do bot nunca em texto plano**: usar `security-crypto` para guardar credenciais em disco; nunca commitar tokens no repositório.
-- **Registo do `BroadcastReceiver`**: dinâmico (`registerReceiver` em runtime), não estático no manifest, para compatibilidade com versões recentes do Android.
-- **Distribuição**: sideload direto do APK assinado — não há submissão à Play Store (política restritiva para permissões `RECEIVE_SMS`/`READ_SMS`).
-- **Gestão de bateria**: o app depende de isenção de otimização de bateria (`REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`); em dispositivos Xiaomi/Huawei/Samsung pode ser necessária configuração manual adicional fora do app.
+- **Token do bot nunca em texto plano**: introduzido em runtime no ecrã de configuração e encriptado com Android Keystore + DataStore (`docs/arquitectura.md` §2.3). Nunca em código, `BuildConfig`, `local.properties` ou recursos; nunca commitado; nunca em logs (o token faz parte do URL da Bot API — o `HttpLoggingInterceptor` só em debug e com o token ocultado).
+- **Registo do `BroadcastReceiver`**: estático no manifest, protegido por `android:permission="android.permission.BROADCAST_SMS"` — não usar `registerReceiver` em runtime, que perde SMS quando o processo está morto. O receiver só grava no Room e enfileira trabalho (via `goAsync()`); nunca faz rede.
+- **Sem Foreground Service**: o envio e os retries são do WorkManager (trabalho único por mensagem). Não reintroduzir um serviço permanente sem atualizar `docs/arquitectura.md`.
+- **Permissões mínimas**: `RECEIVE_SMS`, não `READ_SMS` (ver `docs/arquitectura.md` §2.4).
+- **Distribuição**: sideload direto do APK assinado — não há submissão à Play Store (política restritiva para permissões de SMS).
+- **Gestão de bateria**: o app depende de isenção de otimização de bateria (`REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`); em dispositivos Xiaomi/Huawei/Samsung pode ser necessário ativar o arranque automático e outra configuração manual fora do app.
 
 ## Ao propor mudanças
 

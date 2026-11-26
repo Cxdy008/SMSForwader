@@ -1,4 +1,4 @@
-package com.cxdy.smsforwader.ui.theme
+package com.cxdy.smsforwarder.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -33,7 +33,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun SMSForwaderTheme(
+fun SMSForwarderTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,

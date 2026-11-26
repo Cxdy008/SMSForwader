@@ -1,4 +1,4 @@
-package com.cxdy.smsforwader.ui.theme
+package com.cxdy.smsforwarder.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

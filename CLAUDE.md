@@ -24,7 +24,7 @@ Não duplicar factos entre documentos (apontar para o documento dono) e não esc
 - **Background/retry**: WorkManager (`CoroutineWorker`, backoff exponencial)
 - **Rede**: Retrofit + OkHttp (chamada direta à API do canal, ex. `api.telegram.org`)
 - **Configurações**: DataStore (preferences); o token do bot é encriptado com uma chave AES-GCM do Android Keystore antes de ir para o DataStore (não usar `security-crypto`, descontinuado)
-- **Build**: Gradle Kotlin DSL (`build.gradle.kts`), version catalog em `libs.versions.toml`; AGP 9 com Kotlin integrado (não aplicar o plugin `org.jetbrains.kotlin.android`)
+- **Build**: Gradle Kotlin DSL (`build.gradle.kts`), version catalog em `libs.versions.toml`; AGP 9 com Kotlin integrado (não aplicar o plugin `org.jetbrains.kotlin.android`); o AGP não pode passar a linha suportada pelo Android Studio instalado (ver `docs/desenvolvimento.md`, problemas frequentes)
 - **SDK**: níveis em `app/build.gradle.kts` — subir o `targetSdk` é uma mudança de comportamento em runtime e deve ser feita e testada à parte do `compileSdk`
 
 ## Identificadores do projeto
